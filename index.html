@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Omar Derdare - Full-Stack Developer. React, Node.js, databases and clean architecture." />
+    <title>Omar Derdare | Full-Stack Developer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Sticky GitHub Button -->
+    <a class="github-sticky" href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener" aria-label="Open my GitHub profile">
+      <i class="fab fa-github"></i><span>GitHub</span>
+    </a>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Celebration Container -->
+    <div class="celebration" id="celebration"></div>
+
+    <!-- Hidden Navigation -->
+    <nav class="hidden-nav">
+      <div class="nav-icon" data-title="Home"><i class="fas fa-home"></i></div>
+      <div class="nav-icon" data-title="About"><i class="fas fa-user-secret"></i></div>
+      <div class="nav-icon" data-title="Experience"><i class="fas fa-stream"></i></div>
+      <div class="nav-icon" data-title="Skills"><i class="fas fa-cogs"></i></div>
+      <div class="nav-icon" data-title="Coding Style"><i class="fas fa-code"></i></div>
+      <div class="nav-icon" data-title="Projects"><i class="fas fa-briefcase"></i></div>
+      <div class="nav-icon" data-title="Contact"><i class="fas fa-terminal"></i></div>
+    </nav>
+
+    <!-- Easter Egg Trigger -->
+    <div class="easter-egg">
+      <i class="fas fa-question"></i>
+    </div>
+
+    <!-- Secret Modal -->
+    <div class="secret-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2>Secret Unlocked</h2>
+        <p>You found the hidden layer. I love building details people have to discover.</p>
+        <p>That same curiosity goes into every API, query and interface I ship.</p>
+        <p class="glitch" data-text="Congratulations!">Congratulations!</p>
+        <div class="details-btn-container">
+          <button class="project-details-btn" id="secret-close">Continue Exploring</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Access Denied Modal -->
+    <div class="access-modal">
+      <div class="access-content">
+        <h2 class="access-title">ACCESS DENIED</h2>
+        <p class="access-text">
+          You must first "Enter the Void" to access this content.<br />Initiate
+          the sequence from the main terminal.
+        </p>
+        <button class="access-btn">Acknowledge</button>
+      </div>
+    </div>
+
+    <!-- Hidden Password Section -->
+    <div class="hidden-section" id="password-section">
+      <div class="hidden-section-content">
+        <h2>Restricted Access</h2>
+        <p>Enter the secret code to proceed:</p>
+        <input
+          type="password"
+          class="password-input"
+          placeholder="Enter code"
+        />
+        <p class="password-hint">
+          Hint: Send a message through the contact form to receive the code
+        </p>
+        <div>
+          <button class="submit-btn" id="submit-password">Submit</button>
+          <button class="project-details-btn" id="close-password">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+        <div class="project-modal" id="project1-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2 class="modal-title">ShopFlow E-Commerce</h2>
+        <p class="modal-desc">A complete e-commerce platform built with Laravel: catalog, cart, checkout and an admin panel for orders and inventory.</p>
+        <ul class="modal-features">
+          <li>Stack: PHP, Laravel, MySQL, Vue.js</li>
+          <li>Authentication and role-based permissions</li>
+          <li>Stripe payment integration</li>
+          <li>Admin dashboard with sales analytics</li>
+        </ul>
+        <div class="modal-actions">
+          <a class="project-link" href="https://YOUR-LIVE-LINK/shopflow" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Visit Project</a>
+          <a class="project-link" href="https://github.com/YOUR_USERNAME/shopflow" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source Code</a>
+          <button class="project-details-btn close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-modal" id="project2-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2 class="modal-title">HR &amp; Payroll Manager</h2>
+        <p class="modal-desc">A back-office system that automates employee records, leave requests, payslips and reports.</p>
+        <ul class="modal-features">
+          <li>Stack: PHP, Laravel, Livewire, MySQL</li>
+          <li>Automated payslip PDF generation</li>
+          <li>Leave workflow with email notifications</li>
+          <li>Exportable Excel and PDF reports</li>
+        </ul>
+        <div class="modal-actions">
+          <a class="project-link" href="https://YOUR-LIVE-LINK/hr-payroll" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Visit Project</a>
+          <a class="project-link" href="https://github.com/YOUR_USERNAME/hr-payroll" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source Code</a>
+          <button class="project-details-btn close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-modal" id="project3-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2 class="modal-title">TaskForge API</h2>
+        <p class="modal-desc">An API-first project manager with a clean Laravel backend and a drag-and-drop front end.</p>
+        <ul class="modal-features">
+          <li>Stack: Laravel, Sanctum, MySQL, Docker</li>
+          <li>OpenAPI (Swagger) documentation</li>
+          <li>Automated tests with PHPUnit and CI pipeline</li>
+          <li>Dockerized for one-command deployment</li>
+        </ul>
+        <div class="modal-actions">
+          <a class="project-link" href="https://YOUR-LIVE-LINK/taskforge" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Visit Project</a>
+          <a class="project-link" href="https://github.com/YOUR_USERNAME/taskforge" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source Code</a>
+          <button class="project-details-btn close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-modal" id="project4-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2 class="modal-title">BookingHub</h2>
+        <p class="modal-desc">A booking system with live availability, calendar views, reminders and online payments.</p>
+        <ul class="modal-features">
+          <li>Stack: PHP, Laravel, Tailwind CSS, MySQL</li>
+          <li>Real-time availability calendar</li>
+          <li>SMS and email reminders via queues</li>
+          <li>Multi-tenant business accounts</li>
+        </ul>
+        <div class="modal-actions">
+          <a class="project-link" href="https://YOUR-LIVE-LINK/bookinghub" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Visit Project</a>
+          <a class="project-link" href="https://github.com/YOUR_USERNAME/bookinghub" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source Code</a>
+          <button class="project-details-btn close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-modal" id="project5-modal">
+      <div class="modal-content">
+        <div class="close-modal"><i class="fas fa-times"></i></div>
+        <h2 class="modal-title">ChatSphere</h2>
+        <p class="modal-desc">A WebSocket-powered messaging app focused on speed and reliability.</p>
+        <ul class="modal-features">
+          <li>Stack: Laravel, Reverb (WebSockets), React, Redis</li>
+          <li>Private and group rooms</li>
+          <li>Online presence and typing indicators</li>
+          <li>Message history with pagination</li>
+        </ul>
+        <div class="modal-actions">
+          <a class="project-link" href="https://YOUR-LIVE-LINK/chatsphere" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Visit Project</a>
+          <a class="project-link" href="https://github.com/YOUR_USERNAME/chatsphere" target="_blank" rel="noopener"><i class="fab fa-github"></i> Source Code</a>
+          <button class="project-details-btn close-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero">
+      <div class="hero-content">
+        <p class="hero-kicker monospace">&gt; hello_world();</p>
+        <h1 class="hero-title glitch" data-text="Omar Derdare">Omar Derdare</h1>
+        <p class="hero-role monospace">Full-Stack Developer &middot; PHP &amp; Laravel</p>
+        <p class="hero-subtitle typewriter">From database to pixel, I build it all.</p>
+        <button class="explore-btn">Enter the Void</button>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <h2 class="section-title fade-in">Behind the Code</h2>
+      <div class="about-content">
+        <div class="profile-img-container fade-in">
+          <div class="profile-avatar">OD</div>
+        </div>
+        <div class="bio-text fade-in">
+          <p>I'm <strong>Omar Derdare</strong>, a full-stack developer who turns ideas into fast, secure and maintainable web applications.</p>
+          <p>With <strong>5 years of experience</strong>, my primary language is <strong>PHP</strong> and my framework of choice is <strong>Laravel</strong>. I build robust back ends and REST APIs, pair them with React or Vue interfaces, and design solid MySQL/PostgreSQL databases, all deployed with modern DevOps practices.</p>
+          <p>I care about clean code, clear architecture and shipping features that real users enjoy.</p>
+          <p class="monospace">&gt; Focus: scalable web apps, REST and real-time APIs, performance, and developer experience.</p>
+          <div class="stat-row">
+            <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Years coding</span></div>
+            <div class="stat"><span class="stat-num">PHP</span><span class="stat-label">Primary language</span></div>
+            <div class="stat"><span class="stat-num">10+</span><span class="stat-label">Technologies</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section id="timeline">
+      <h2 class="section-title fade-in">Chronicles of Progress</h2>
+      <div class="timeline-container fade-in">
+        <div class="timeline">
+          <div class="timeline-connector"></div>
+          <div class="timeline-category">
+            <div class="timeline-category-icon"><i class="fas fa-briefcase"></i></div>
+            <h3 class="timeline-category-title">IT &amp; Development Experience</h3>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" data-year="2024-P"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2024 - Present</div>
+              <h3 class="timeline-title">Full-Stack Developer</h3>
+              <div class="timeline-place">Freelance &amp; Remote Projects</div>
+              <p class="timeline-desc">Designing and delivering complete web applications for clients: front end, back end, database and deployment.</p>
+              <div class="timeline-hover-content">
+                <p>Owning products end to end, from requirements to production.</p>
+                <ul><li>Built Laravel REST APIs, admin dashboards and React/Vue front ends</li><li>Set up Docker deployments and CI/CD pipelines</li></ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" data-year="2023"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2023 - 2024</div>
+              <h3 class="timeline-title">PHP / Laravel Developer</h3>
+              <div class="timeline-place">API &amp; Database Engineering</div>
+              <p class="timeline-desc">Developed secure Laravel and PHP APIs, authentication flows and optimized database schemas for data-heavy applications.</p>
+              <div class="timeline-hover-content">
+                <p>Learned that good data modeling saves months of pain.</p>
+                <ul><li>Query optimization and indexing on MySQL / PostgreSQL</li><li>Authentication with JWT, OAuth and role-based access</li></ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" data-year="2022"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2022 - 2023</div>
+              <h3 class="timeline-title">Front-End Developer</h3>
+              <div class="timeline-place">Web Development</div>
+              <p class="timeline-desc">Built responsive, accessible interfaces and reusable component libraries.</p>
+              <div class="timeline-hover-content">
+                <p>Where the love for clean, component-driven UI began.</p>
+                <ul><li>React component systems with state management</li><li>Cross-browser, mobile-first and performance-tuned pages</li></ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot" data-year="2021"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2021 - 2022</div>
+              <h3 class="timeline-title">IT Support &amp; Web Technician</h3>
+              <div class="timeline-place">Technical Operations</div>
+              <p class="timeline-desc">Maintained systems, troubleshot hardware and software issues and supported websites and internal tools.</p>
+              <div class="timeline-hover-content">
+                <p>A strong foundation in networks, systems and problem solving.</p>
+                <ul><li>Diagnosed and resolved technical incidents quickly</li><li>Managed websites, hosting and basic server tasks</li></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2 class="section-title fade-in">Digital Arsenal</h2>
+      <div class="skills-container fade-in">
+        <div class="skill-category">
+          <h3 class="skill-category-title">Front-end</h3>
+          <div class="skills-grid">
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">HTML5 / CSS3</span><span class="skill-percentage">95%</span></div><div class="skill-bar"><div class="skill-progress" data-width="95%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-percentage">92%</span></div><div class="skill-bar"><div class="skill-progress" data-width="92%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">React.js</span><span class="skill-percentage">90%</span></div><div class="skill-bar"><div class="skill-progress" data-width="90%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">Tailwind / Responsive UI</span><span class="skill-percentage">88%</span></div><div class="skill-bar"><div class="skill-progress" data-width="88%"></div></div></div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3 class="skill-category-title">Back-end &amp; APIs</h3>
+          <div class="skills-grid">
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">PHP <span class="skill-badge">PRIMARY</span></span><span class="skill-percentage">96%</span></div><div class="skill-bar"><div class="skill-progress" data-width="96%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">Laravel</span><span class="skill-percentage">93%</span></div><div class="skill-bar"><div class="skill-progress" data-width="93%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">Node.js / Express</span><span class="skill-percentage">82%</span></div><div class="skill-bar"><div class="skill-progress" data-width="82%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">REST &amp; GraphQL APIs</span><span class="skill-percentage">88%</span></div><div class="skill-bar"><div class="skill-progress" data-width="88%"></div></div></div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3 class="skill-category-title">Databases &amp; DevOps</h3>
+          <div class="skills-grid">
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">PostgreSQL / MySQL</span><span class="skill-percentage">86%</span></div><div class="skill-bar"><div class="skill-progress" data-width="86%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">MongoDB</span><span class="skill-percentage">84%</span></div><div class="skill-bar"><div class="skill-progress" data-width="84%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">Docker &amp; CI/CD</span><span class="skill-percentage">80%</span></div><div class="skill-bar"><div class="skill-progress" data-width="80%"></div></div></div>
+            <div class="skill-item"><div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-percentage">93%</span></div><div class="skill-bar"><div class="skill-progress" data-width="93%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coding Style Section -->
+    <section id="coding-style">
+      <h2 class="section-title fade-in">Programming Style</h2>
+      <div class="style-layout fade-in">
+        <div class="code-card">
+          <div class="code-card-bar"><span></span><span></span><span></span><em>omar.config.js</em></div>
+<pre class="code-block"><code><span class="c-k">const</span> <span class="c-v">omar</span> = {
+  <span class="c-p">role</span>: <span class="c-s">'Full-Stack Developer'</span>,
+  <span class="c-p">primary</span>: <span class="c-s">'PHP'</span>,
+  <span class="c-p">years</span>: 5,
+  <span class="c-p">stack</span>: [<span class="c-s">'Laravel'</span>, <span class="c-s">'MySQL'</span>, <span class="c-s">'React'</span>],
+  <span class="c-p">principles</span>: [
+    <span class="c-s">'readable over clever'</span>,
+    <span class="c-s">'small, pure functions'</span>,
+    <span class="c-s">'test early, ship often'</span>,
+  ],
+  <span class="c-f">build</span>() {
+    <span class="c-k">return</span> <span class="c-s">'scalable, secure products'</span>;
+  },
+};</code></pre>
+        </div>
+        <div class="style-grid">
+          <div class="style-card"><i class="fas fa-broom"></i><h4>Clean Code &amp; SOLID</h4><p>Clear naming, single responsibility and code that teammates enjoy reading.</p></div>
+          <div class="style-card"><i class="fas fa-cubes"></i><h4>Object-Oriented</h4><p>Encapsulation, inheritance and polymorphism for structured back-end logic.</p></div>
+          <div class="style-card"><i class="fas fa-square-root-alt"></i><h4>Functional Programming</h4><p>Pure functions, immutability and composition to reduce bugs and side effects.</p></div>
+          <div class="style-card"><i class="fas fa-plug"></i><h4>API-First Design</h4><p>Contract-driven REST endpoints, versioning and documentation with OpenAPI.</p></div>
+          <div class="style-card"><i class="fas fa-puzzle-piece"></i><h4>Component-Driven UI</h4><p>Reusable, composable components with predictable state management.</p></div>
+          <div class="style-card"><i class="fas fa-vial"></i><h4>Test-Driven (TDD)</h4><p>Unit and integration tests with Jest that make refactoring safe.</p></div>
+          <div class="style-card"><i class="fas fa-code-branch"></i><h4>Agile &amp; Git Flow</h4><p>Small iterations, code reviews, pull requests and continuous delivery.</p></div>
+          <div class="style-card"><i class="fas fa-shield-alt"></i><h4>Security-First</h4><p>Input validation, hashing, rate limiting and OWASP best practices.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+      <h2 class="section-title fade-in">Hidden Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card fade-in">
+          <div class="project-content">
+            <h3 class="project-title">ShopFlow E-Commerce</h3>
+            <p class="project-desc">Online store with cart, secure checkout and an admin dashboard.</p>
+            <p class="project-tags monospace">PHP, Laravel, MySQL, Stripe</p>
+            <div class="project-links">
+              <button class="project-details-btn detail-btn" data-modal="project1-modal">Details</button>
+              <a class="project-link" href="https://luxe-clothing-by-omar.freedev.app/" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-content">
+            <h3 class="project-title">HR &amp; Payroll Manager</h3>
+            <p class="project-desc">Employee, leave and payroll management for growing companies.</p>
+            <p class="project-tags monospace">PHP, Laravel, Livewire, MySQL</p>
+            <div class="project-links">
+              <button class="project-details-btn detail-btn" data-modal="project2-modal">Details</button>
+              <a class="project-link" href="https://YOUR-LIVE-LINK/hr-payroll" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-content">
+            <h3 class="project-title">TaskForge API</h3>
+            <p class="project-desc">Documented REST API and Kanban app for teams and tasks.</p>
+            <p class="project-tags monospace">Laravel, Sanctum, Docker, Jest</p>
+            <div class="project-links">
+              <button class="project-details-btn detail-btn" data-modal="project3-modal">Details</button>
+              <a class="project-link" href="https://YOUR-LIVE-LINK/taskforge" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-content">
+            <h3 class="project-title">BookingHub</h3>
+            <p class="project-desc">Reservation platform for clinics, salons and venues.</p>
+            <p class="project-tags monospace">PHP, Laravel, Tailwind, MySQL</p>
+            <div class="project-links">
+              <button class="project-details-btn detail-btn" data-modal="project4-modal">Details</button>
+              <a class="project-link" href="https://YOUR-LIVE-LINK/bookinghub" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-content">
+            <h3 class="project-title">ChatSphere</h3>
+            <p class="project-desc">Real-time chat with rooms, typing indicators and file sharing.</p>
+            <p class="project-tags monospace">Laravel, Reverb, React, Redis</p>
+            <div class="project-links">
+              <button class="project-details-btn detail-btn" data-modal="project5-modal">Details</button>
+              <a class="project-link" href="https://YOUR-LIVE-LINK/chatsphere" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2 class="section-title fade-in">Initiate Contact</h2>
+      <div class="contact-info fade-in">
+        <a class="contact-chip" href="mailto:oderdare@gmail.com"><i class="fas fa-envelope"></i> oderdare@gmail.com</a>
+        <a class="contact-chip" href="tel:+212625696374"><i class="fas fa-phone"></i> 0625696374</a>
+      </div>
+      <div class="terminal fade-in">
+        <div class="transmission-overlay" id="transmission-overlay">
+          <div class="transmission-content">
+            <h3>TRANSMISSION IN PROGRESS</h3>
+            <div class="transmission-progress">
+              <div class="transmission-progress-bar" id="progress-bar"></div>
+            </div>
+            <p class="monospace" id="transmission-text">
+              Initializing secure connection...
+            </p>
+            <div
+              class="secret-code-reveal"
+              id="secret-code-reveal"
+              style="display: none"
+            >
+              <p>
+                Secret code received: <span class="monospace">EN1GM4-2025</span>
+              </p>
+              <p>Use this code to unlock hidden content!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="terminal-header">
+          <div class="terminal-title">secure_connection.exe</div>
+          <div class="terminal-controls">
+            <div class="control close"></div>
+            <div class="control minimize"></div>
+            <div class="control maximize"></div>
+          </div>
+        </div>
+        <div class="terminal-body">
+          <p class="monospace">Establishing secure connection...</p>
+          <p class="monospace">Connection encrypted [✓]</p>
+          <p class="monospace">Send me a message, I reply fast:</p>
+          <div class="input-line">
+            <span class="prompt">> </span>
+            <input
+              type="text"
+              class="terminal-input"
+              placeholder="Your name"
+              id="contact-name"
+            />
+          </div>
+          <div class="input-line">
+            <span class="prompt">> </span>
+            <input
+              type="email"
+              class="terminal-input"
+              placeholder="Your email"
+              id="contact-email"
+            />
+          </div>
+          <div class="input-line">
+            <span class="prompt">> </span>
+            <input
+              type="text"
+              class="terminal-input"
+              placeholder="Your message"
+              id="contact-message"
+            />
+          </div>
+        </div>
+        <button class="submit-btn" id="transmit-btn">Transmit</button>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>
