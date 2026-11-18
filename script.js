@@ -1,429 +1,184 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const sections = document.querySelectorAll('section:not(#hero)');
-  const navIcons = document.querySelectorAll('.nav-icon');
-  const hiddenNav = document.querySelector('.hidden-nav');
-  const easterEgg = document.querySelector('.easter-egg');
-  const accessModal = document.querySelector('.access-modal');
-  const accessBtn = document.querySelector('.access-btn');
-  const exploreBtn = document.querySelector('.explore-btn');
-  const body = document.querySelector('body');
-  const particlesContainer = document.getElementById('particles');
-  const passwordSection = document.getElementById('password-section');
-  const submitPasswordBtn = document.getElementById('submit-password');
-  const closePasswordBtn = document.getElementById('close-password');
-  const passwordInput = document.querySelector('.password-input');
-  const transmitBtn = document.getElementById('transmit-btn');
-  const transmissionOverlay = document.getElementById('transmission-overlay');
-  const progressBar = document.getElementById('progress-bar');
-  const transmissionText = document.getElementById('transmission-text');
-  const secretCloseBtn = document.getElementById('secret-close');
-  const secretCodeReveal = document.getElementById('secret-code-reveal');
-  const celebrationContainer = document.getElementById('celebration');
-  const timelineDots = document.querySelectorAll('.timeline-dot');
-  const skillBars = document.querySelectorAll('.skill-progress');
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  let accessGranted = false;
+  // Mobile menu
+  const links = document.getElementById('links');
+  document.getElementById('burger').addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => links.classList.remove('open')));
 
-  // Create floating particles
-  function createParticles() {
-    const count = 50;
-    for (let i = 0; i < count; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.top = Math.random() * 100 + 'vh';
-      particle.style.animationDelay = Math.random() * 15 + 's';
-      particle.style.width = Math.random() * 4 + 2 + 'px';
-      particle.style.height = particle.style.width;
-      particlesContainer.appendChild(particle);
-    }
-  }
-
-  createParticles();
-
-  // Initially hide all sections except hero
-  sections.forEach((section) => {
-    section.style.display = 'none';
-  });
-
-  function grantAccess() {
-    accessGranted = true;
-    exploreBtn.textContent = 'Access Granted';
-    exploreBtn.classList.add('granted');
-
-    // Show hidden sections with animation
-    setTimeout(() => {
-      sections.forEach((section) => {
-        section.style.display = 'flex';
-        setTimeout(() => {
-          section.classList.add('visible');
-        }, 100);
-      });
-
-      // Show navigation and easter egg
-      hiddenNav.classList.add('visible');
-      setTimeout(() => {
-        easterEgg.classList.add('visible');
-      }, 1000);
-
-      // Scroll to about section
-      document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-    }, 1000);
-  }
-
-  // Explore button functionality
-  exploreBtn.addEventListener('click', () => {
-    grantAccess();
-  });
-
-  // Navigation functionality
-  navIcons.forEach((icon, index) => {
-    icon.addEventListener('click', () => {
-      if (!accessGranted) {
-        showAccessDenied();
-        return;
-      }
-
-      const sections = document.querySelectorAll('section');
-      sections[index].scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-
-  // Show access denied modal
-  function showAccessDenied() {
-    accessModal.classList.add('active');
-  }
-
-  // Close access denied modal
-  accessBtn.addEventListener('click', () => {
-    accessModal.classList.remove('active');
-  });
-
-  // Add click effect to dots
-  timelineDots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      // Create ripple effect
-      const ripple = document.createElement('div');
-      ripple.style.position = 'absolute';
-      ripple.style.width = '40px';
-      ripple.style.height = '40px';
-      ripple.style.borderRadius = '50%';
-      ripple.style.background = 'rgba(138, 43, 226, 0.3)';
-      ripple.style.left = '50%';
-      ripple.style.top = '50%';
-      ripple.style.transform = 'translate(-50%, -50%)';
-      ripple.style.animation = 'ripple 0.6s linear';
-
-      dot.appendChild(ripple);
-
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    });
-  });
-
-  // Animate skill bars when they come into view
-  const skillsObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const width = entry.target.getAttribute('data-width');
-          entry.target.style.width = width;
-          entry.target.classList.add('animate');
-        }
-      });
-    },
-    { threshold: 0.5 }
+  // Active nav link on scroll
+  const navLinks = [...links.querySelectorAll('a')];
+  const spy = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (e.isIntersecting)
+          navLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }),
+    { rootMargin: '-45% 0px -50% 0px' }
   );
+  document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
 
-  skillBars.forEach((bar) => {
-    skillsObserver.observe(bar);
-  });
+  // Reveal on scroll + animated skill bars
+  const reveal = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        const fill = e.target.querySelector('.fill');
+        if (fill) fill.style.width = fill.dataset.w;
+        reveal.unobserve(e.target);
+      }),
+    { threshold: 0.15 }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => reveal.observe(el));
 
-  // Easter egg functionality
-  const egg = document.querySelector('.easter-egg');
-  const modal = document.querySelector('.secret-modal');
-  const closeModal = document.querySelectorAll('.close-modal');
-
-  egg.addEventListener('click', () => {
-    if (!accessGranted) {
-      showAccessDenied();
+  // Contact form: validates, then opens the visitor's email app addressed to Omar
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('status');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const [n, em, s, m] = ['cn', 'ce', 'cs', 'cm'].map((id) => document.getElementById(id));
+    let ok = true;
+    [n, em, m].forEach((f) => {
+      const bad = !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value));
+      f.classList.toggle('error', bad);
+      if (bad) ok = false;
+    });
+    status.className = 'status';
+    if (!ok) {
+      status.textContent = 'Please enter your name, a valid email and a message.';
+      status.classList.add('bad');
       return;
     }
-    passwordSection.classList.add('active');
+    const subject = s.value.trim() || 'Portfolio message from ' + n.value.trim();
+    const body = `${m.value.trim()}\n\n- ${n.value.trim()} (${em.value.trim()})`;
+    status.textContent = 'Thank you! Opening your email app to send the message...';
+    status.classList.add('ok');
+    window.location.href =
+      'mailto:oderdare@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    form.reset();
   });
+  form.querySelectorAll('input,textarea').forEach((f) => f.addEventListener('input', () => f.classList.remove('error')));
+});
 
-  // Close modals
-  closeModal.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.target
-        .closest('.secret-modal, .project-modal')
-        .classList.remove('active');
-    });
-  });
+// ===== v5 animations =====
+document.addEventListener('DOMContentLoaded', () => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Close secret modal with button
-  secretCloseBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-
-  // Password section functionality
-  submitPasswordBtn.addEventListener('click', () => {
-    if (passwordInput.value === 'EN1GM4-2025') {
-      passwordSection.classList.remove('active');
-      createCelebration();
-      modal.classList.add('active');
-      document.querySelectorAll('.project-card').forEach((card) => {
-        card.classList.add('unlocked');
-        const st = card.querySelector('.project-status');
-        if (st) st.textContent = '[ UNLOCKED ]';
-      });
-    } else {
-      passwordInput.style.borderColor = 'var(--neon-pink)';
-      passwordInput.style.boxShadow = '0 0 10px var(--neon-pink)';
-      setTimeout(() => {
-        passwordInput.style.borderColor = 'var(--accent)';
-        passwordInput.style.boxShadow = 'none';
-      }, 1000);
-    }
-  });
-
-  closePasswordBtn.addEventListener('click', () => {
-    passwordSection.classList.remove('active');
-  });
-
-  // Create celebration effect
-  function createCelebration() {
-    celebrationContainer.innerHTML = '';
-    for (let i = 0; i < 100; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
-      confetti.style.animation = `confetti-fall ${
-        Math.random() * 3 + 2
-      }s linear forwards`;
-      confetti.style.animationDelay = Math.random() * 2 + 's';
-      celebrationContainer.appendChild(confetti);
-    }
-
-    setTimeout(() => {
-      celebrationContainer.innerHTML = '';
-    }, 5000);
+  // Floating code symbols (programming style background)
+  const box = document.getElementById('symbols');
+  const syms = ['{ }', '</>', '=>', '();', '$', '::', '[]', '&&', '//', '<?php', '#', 'fn', '==', '++', '/**/', '->', 'null', '0x'];
+  for (let i = 0; i < 34; i++) {
+    const el = document.createElement('span');
+    el.className = 'sym';
+    el.textContent = syms[Math.floor(Math.random() * syms.length)];
+    const d = 16 + Math.random() * 26;
+    el.style.cssText = `left:${Math.random() * 100}%;font-size:${14 + Math.random() * 22}px;animation-duration:${d}s;animation-delay:-${Math.random() * d}s;--dx:${(Math.random() - 0.5) * 140}px;--r:${(Math.random() - 0.5) * 360}deg;--o:${0.08 + Math.random() * 0.16}`;
+    box.appendChild(el);
   }
 
-  // Project card modals
-  const DetailBtns = document.querySelectorAll('.detail-btn');
-  const projectModals = document.querySelectorAll('.project-modal');
-  const CloseBtns = document.querySelectorAll('.close-btn');
+  // Typing roles
+  const typed = document.getElementById('typed');
+  const roles = ['Full-Stack Developer', 'PHP & Laravel Expert', 'REST API Architect', 'Clean Code Enthusiast', 'Problem Solver'];
+  let r = 0, ch = 0, del = false;
+  (function type() {
+    const word = roles[r];
+    ch += del ? -1 : 1;
+    typed.textContent = word.slice(0, ch);
+    let wait = del ? 35 : 75;
+    if (!del && ch === word.length) { del = true; wait = 1500; }
+    else if (del && ch === 0) { del = false; r = (r + 1) % roles.length; wait = 350; }
+    setTimeout(type, reduce ? 99999 : wait);
+  })();
+  if (reduce) typed.textContent = roles[0];
 
-  DetailBtns.forEach((card) => {
-    card.addEventListener('click', (e) => {
-      if (!accessGranted) {
-        showAccessDenied();
-        return;
-      }
+  // Scroll progress, nav shrink, back-to-top
+  const bar = document.getElementById('progress'), nav = document.querySelector('.nav'), top = document.getElementById('totop');
+  const onScroll = () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + '%';
+    nav.classList.toggle('scrolled', h.scrollTop > 30);
+    top.classList.toggle('show', h.scrollTop > 600);
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  top.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-      const modalId = card.getAttribute('data-modal');
-      document.getElementById(modalId).classList.add('active');
-    });
-  });
+  // Section headings reveal
+  const headIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); headIO.unobserve(e.target); } }), { threshold: 0.4 });
+  document.querySelectorAll('.head').forEach((h) => { h.classList.add('reveal'); headIO.observe(h); });
 
-  CloseBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.target.closest('.project-modal').classList.remove('active');
-    });
-  });
-
-  // Transmission animation
-  transmitBtn.addEventListener('click', () => {
-    const name = document.getElementById('contact-name').value;
-    const email = document.getElementById('contact-email').value;
-    const message = document.getElementById('contact-message').value;
-
-    if (!name || !email || !message) {
-      // Highlight empty fields
-      const inputs = document.querySelectorAll('.terminal-input');
-      inputs.forEach((input) => {
-        if (!input.value) {
-          input.style.borderColor = 'var(--neon-pink)';
-          input.style.boxShadow = '0 0 10px var(--neon-pink)';
-          setTimeout(() => {
-            input.style.borderColor = '';
-            input.style.boxShadow = '';
-          }, 2000);
-        }
-      });
-      return;
-    }
-
-    // Show transmission overlay
-    transmissionOverlay.classList.add('active');
-
-    // Animate progress bar
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 1;
-      progressBar.style.width = progress + '%';
-
-      if (progress === 20)
-        transmissionText.textContent = 'Establishing quantum encryption...';
-      if (progress === 40)
-        transmissionText.textContent = 'Routing through secure channels...';
-      if (progress === 60)
-        transmissionText.textContent = 'Transmitting data packets...';
-      if (progress === 80)
-        transmissionText.textContent = 'Finalizing transmission...';
-
-      if (progress >= 100) {
-        clearInterval(interval);
-
-        // Small delay so bar hits 100% first, then show complete message
-        setTimeout(() => {
-          transmissionText.textContent =
-            'Transmission complete! Message received.';
-          secretCodeReveal.style.display = 'block';
-
-          setTimeout(() => {
-            window.location.href =
-              'mailto:oderdare@gmail.com?subject=' +
-              encodeURIComponent('Portfolio message from ' + name) +
-              '&body=' +
-              encodeURIComponent(message + '\n\nFrom: ' + name + ' (' + email + ')');
-            transmissionOverlay.classList.remove('active');
-            progressBar.style.width = '0%';
-            transmissionText.textContent = 'Initializing secure connection...';
-            secretCodeReveal.style.display = 'none';
-
-            // Reset form
-            document.getElementById('contact-name').value = '';
-            document.getElementById('contact-email').value = '';
-            document.getElementById('contact-message').value = '';
-          }, 5000);
-        }, 3000); 
-      }
-    }, 30);
-  });
-
-  // Scroll animation for elements
-  const fadeElements = document.querySelectorAll('.fade-in');
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && accessGranted) {
-          entry.target.classList.add('visible');
-        }
-      });
-    },
-    { threshold: 0.1 }
+  // Stagger children of grids
+  document.querySelectorAll('.skills,.minis,.projects,.stats').forEach((g) =>
+    [...g.querySelectorAll(':scope > .reveal')].forEach((el, i) => el.style.setProperty('--d', (i % 3) * 0.12 + Math.floor(i / 3) * 0.06 + 's'))
   );
 
-  fadeElements.forEach((el) => observer.observe(el));
+  // After reveal: remove delay, enable tilt + spotlight
+  const doneIO = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    doneIO.unobserve(e.target);
+    setTimeout(() => e.target.classList.add('done'), 1500);
+  }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el) => doneIO.observe(el));
 
-  // Terminal input focus
-  const terminalInputs = document.querySelectorAll('.terminal-input');
-  terminalInputs.forEach((input) => {
-    input.addEventListener('focus', () => {
-      input.parentElement.classList.add('focused');
-    });
-
-    input.addEventListener('blur', () => {
-      input.parentElement.classList.remove('focused');
-    });
-  });
-
-  // Prevent scrolling if access not granted
-  window.addEventListener('scroll', (e) => {
-    if (!accessGranted && window.scrollY > window.innerHeight * 0.5) {
-      window.scrollTo(0, 0);
-      showAccessDenied();
-    }
-  });
-
-  // Add interactive background effect on mouse move
-  document.addEventListener('mousemove', (e) => {
-    if (!accessGranted) return;
-
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
-
-    document.body.style.background = `
-          radial-gradient(circle at ${x * 100}% ${
-      y * 100
-    }%, rgba(40, 0, 80, 0.1), transparent 25%),
-          radial-gradient(circle at ${100 - x * 100}% ${
-      100 - y * 100
-    }%, rgba(100, 0, 150, 0.1), transparent 25%),
-          var(--darker-bg)
-      `;
-  });
-
-  // Escape closes any open modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document
-        .querySelectorAll('.secret-modal.active, .project-modal.active, .access-modal.active, .hidden-section.active')
-        .forEach((el) => el.classList.remove('active'));
-    }
-  });
-
-  // Enter submits the password
-  passwordInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') submitPasswordBtn.click();
-  });
-
-  // Highlight the nav icon of the section in view
-  const allSections = document.querySelectorAll('section');
-  const navObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const idx = [...allSections].indexOf(entry.target);
-        navIcons.forEach((n, i) => n.classList.toggle('active', i === idx));
+  const syms2 = ['{ }', 'class', '=>', '/api', '</>', 'assert', 'git', '$_'];
+  document.querySelectorAll('.mini').forEach((m, i) => (m.dataset.sym = syms2[i % syms2.length]));
+  if (!reduce && matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.project,.mini,.stat').forEach((card) => {
+      card.classList.add('spot');
+      card.addEventListener('mousemove', (e) => {
+        const b = card.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+        card.style.setProperty('--mx', x + 'px'); card.style.setProperty('--my', y + 'px');
+        if (card.classList.contains('done') && !card.classList.contains('stat'))
+          card.style.transform = `perspective(800px) rotateX(${((y / b.height) - 0.5) * -8}deg) rotateY(${((x / b.width) - 0.5) * 8}deg) translateY(-6px)`;
       });
-    },
-    { threshold: 0.4 }
-  );
-  allSections.forEach((sec) => navObserver.observe(sec));
-
-  // Project cards: locked at first, click to reveal
-  document.querySelectorAll('.project-card').forEach((card, i) => {
-    const num = document.createElement('span');
-    num.className = 'project-num';
-    num.textContent = String(i + 1).padStart(2, '0');
-    const status = document.createElement('span');
-    status.className = 'project-status';
-    status.textContent = '[ LOCKED ]';
-    const lock = document.createElement('div');
-    lock.className = 'lock-wrap';
-    lock.innerHTML =
-      '<div class="lock-shackle"></div><div class="lock-body"><span class="lock-keyhole"></span></div><i class="fas fa-key lock-key"></i>';
-    card.append(num, status, lock);
-
-    // Turn the tech list into chips
-    const tags = card.querySelector('.project-tags');
-    if (tags) {
-      tags.innerHTML = tags.textContent
-        .split(',')
-        .map((t) => '<span class="tag-chip">' + t.trim() + '</span>')
-        .join('');
-    }
-
-    card.addEventListener('click', () => {
-      if (!accessGranted) {
-        showAccessDenied();
-        return;
-      }
-      if (card.classList.contains('unlocked') || card.classList.contains('unlocking')) return;
-      card.classList.add('unlocking');
-      status.textContent = '[ UNLOCKING... ]';
-      setTimeout(() => {
-        card.classList.remove('unlocking');
-        card.classList.add('unlocked');
-        status.textContent = '[ UNLOCKED ]';
-      }, 1500);
+      card.addEventListener('mouseleave', () => (card.style.transform = ''));
     });
-  });
+  }
+
+  // Count-up numbers
+  const countIO = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return;
+    countIO.unobserve(e.target);
+    const end = +e.target.dataset.count, t0 = performance.now();
+    (function step(t) {
+      const p = Math.min((t - t0) / 1400, 1);
+      e.target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + '+';
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }), { threshold: 0.6 });
+  document.querySelectorAll('[data-count]').forEach((n) => countIO.observe(n));
+
+  // Typing code editor
+  const pre = document.getElementById('code-demo');
+  const code = `<?php
+
+class OrderController extends Controller
+{
+    // Thin controller, validated input, tested logic
+    public function store(StoreOrderRequest $request)
+    {
+        $order = $this->orders->create($request->validated());
+
+        return new OrderResource($order);
+    }
+}`;
+  const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  const hl = (t) =>
+    esc(t).replace(
+      /(\/\/.*)|\b(class|extends|public|function|return|new)\b|(\$\w+)|\b(OrderController|Controller|StoreOrderRequest|OrderResource)\b/g,
+      (m, c, k, v, f) => `<span class="${c ? 'c' : k ? 'k' : v ? 'v' : 'f'}">${m}</span>`
+    );
+  let started = false;
+  const codeIO = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting || started) return;
+    started = true;
+    let i = 0;
+    (function tick() {
+      i += 2;
+      pre.innerHTML = hl(code.slice(0, i)) + '<span class="caret"></span>';
+      if (i < code.length && !reduce) setTimeout(tick, 22);
+      else pre.innerHTML = hl(code);
+    })();
+  }), { threshold: 0.4 });
+  codeIO.observe(pre);
 });
