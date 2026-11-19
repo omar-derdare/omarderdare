@@ -8,6 +8,13 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .sec{padding:5rem 1.5rem}
 .accent{color:var(--accent)}
 
+
+/* Fix horizontal scroll */
+html, body { max-width: 100%; overflow-x: hidden; overflow-x: clip; }
+main { overflow-x: clip; }
+.hero-visual::before { width: min(470px, 86vw); }
+.code-float { right: 0; }
+
 /* Nav */
 .nav{position:sticky;top:0;z-index:100;background:rgba(5,8,26,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:70px;gap:1rem}
